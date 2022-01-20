@@ -13,7 +13,6 @@ jobs:
       - run: |
           echo $SSH_PRIVATE_HOST >> ./ansible/inventory; cat ./ansible/inventory # insert private host ip to ansible inventory
           scp -r ./ansible "$SSH_USER@$SSH_HOST:/home/$SSH_USER" # copy ansible directory to Bastion EC2 host with new inventore (from checkout)
-    steps:
       - when:
           condition: 
             and:
