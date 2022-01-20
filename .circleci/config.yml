@@ -13,9 +13,14 @@ jobs:
       - run: ssh $SSH_USER@$SSH_HOST "hostname" # delete (for test)
       - run: scp -r ./ansible "$SSH_USER@$SSH_HOST:/home/$SSH_USER" # copy ansible directory to Bastion EC2 host with new inventore (from checkout)
       - run: ssh $SSH_USER@$SSH_HOST "cd ansible; ansible dev -m file -a 'path=/home/ubuntu/${VAR}.txt state=touch'" # run playbook
+      - run:
+          name: Run multiple ansible ad-hoc commands
+          command: |
+            ssh $SSH_USER@$SSH_HOST "cd ansible; for i in <<parameters.envs>>; do ansible dev -m file -a 'path=/home/ubuntu/$i.txt state=touch' done"
 parameters:
-  var_test:
-    default: latest
+  envs:
+    description: project environments
+    default: ${envs}
     type: string
 
 workflows:
@@ -30,4 +35,3 @@ workflows:
 # - run: ssh $SSH_USER@$SSH_HOST "ansible-playbook /home/ubuntu/ansible/playbook.yaml"
 # - run: ssh $SSH_USER@$SSH_HOST "ansible dev -i /home/ubuntu/ansible/inventory -m file -a 'path=/home/ubuntu/ubuntu_test.txt state=touch'"
 #- run: ssh $SSH_USER@$SSH_HOST "ansible all -i inventory -m ping"
-
