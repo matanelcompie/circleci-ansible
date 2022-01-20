@@ -18,7 +18,7 @@ jobs:
             and:
               - equal: [ value1, << pipeline.parameters.var1 >> ]
           steps:
-            - run: ssh $SSH_USER@$SSH_HOST "cd ansible; ansible dev -m file -a 'path=/home/ubuntu/${VAR}.txt state=touch'" # run ansible
+            - run: ssh $SSH_USER@$SSH_HOST "cd ansible; ansible -i $SSH_PRIVATE_HOST -m file -a 'path=/home/ubuntu/${VAR}.txt state=touch'" # run ansible
       - when:
           condition: 
             and:
