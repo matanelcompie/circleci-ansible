@@ -4,8 +4,6 @@ jobs:
     machine:
       enabled: true
     working_directory: ~/app
-    environment:
-      VAR: "<< pipeline.parameters.var_test >>"
     steps:
       - checkout
       - run: pwd; ls; echo -e "$SSH_HOST\n${SSH_HOST}\n\n$VAR\n${VAR}" # delete (for test)
