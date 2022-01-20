@@ -7,7 +7,7 @@
      steps:
        - checkout
        - run: pwd; ls # delete (for test)
-       - run: echo $SSH_PRIVATE_HOST >> ./ansible/inventory # insert private host ip to ansible inventory
+       - run: echo $SSH_PRIVATE_HOST >> ./ansible/inventory; cat ./ansible/inventory # insert private host ip to ansible inventory
        - run: ssh $SSH_USER@$SSH_HOST "hostname" # delete (for test)
        - run: scp -r ./ansible "$SSH_USER@$SSH_HOST:/home/$SSH_USER" # copy ansible directory to Bastion EC2 host with new inventore (from checkout)
        - run: ssh $SSH_USER@$SSH_HOST "cd ansible; ansible dev -m file -a 'path=/home/$SSH_USER/111.txt state=touch'" # run playbook
