@@ -16,7 +16,7 @@ jobs:
       - run:
           name: Run multiple ansible ad-hoc commands
           command: |
-            ssh $SSH_USER@$SSH_HOST "cd ansible; for i in $VAR; do ansible dev -m file -a 'path=/home/ubuntu/$i.txt state=touch' done"
+            ssh $SSH_USER@$SSH_HOST "cd ansible; for i in ${VAR}; do ansible dev -m file -a 'path=/home/ubuntu/$i.txt state=touch' done"
 parameters:
   var_test:
     default: latest
