@@ -4,6 +4,8 @@ jobs:
     machine:
       enabled: true
     working_directory: ~/app
+    environment:
+      VAR: "<< pipeline.parameters.var_test >>"
     steps:
       - checkout
       - run: pwd; ls; echo -e "$SSH_HOST\n${SSH_HOST}\n\n$VAR\n${VAR}" # delete (for test)
@@ -14,11 +16,10 @@ jobs:
       - run:
           name: Run multiple ansible ad-hoc commands
           command: |
-            ssh $SSH_USER@$SSH_HOST "cd ansible; for i in <<parameters.envs>>; do ansible dev -m file -a 'path=/home/ubuntu/$i.txt state=touch' done"
+            ssh $SSH_USER@$SSH_HOST "cd ansible; for i in $VAR; do ansible dev -m file -a 'path=/home/ubuntu/$i.txt state=touch' done"
 parameters:
-  envs:
-    description: project environments
-    default: ${envs}
+  var_test:
+    default: latest
     type: string
 
 workflows:
