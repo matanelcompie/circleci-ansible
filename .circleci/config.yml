@@ -17,7 +17,7 @@ jobs:
       - when:
           condition: 
             and:
-              - equal: [ value1, ${VAR} ]
+              - equal: [ value1, "${VAR}" ]
           steps:
             - run: ssh $SSH_USER@$SSH_HOST "cd ansible; ansible dev -m file -a 'path=/home/ubuntu/${VAR}.txt state=touch'" # run ansible
       - when:
